@@ -37,20 +37,9 @@ text_representation=dataset.apply(format_data,axis=1)
 
 text_list = text_representation.tolist()
 
-# Step 2: Create Document objects from these strings
 documents = [Document(page_content=text) for text in text_list]
 
 st.title("Song Recommender")
-
-# text_splitter=RecursiveCharacterTextSplitter(chunk_size=100,chunk_overlap=20)
-# final_docs=text_splitter.split_documents(documents)
-# limited_docs = final_docs[:10000]
-# embeddings=HuggingFaceBgeEmbeddings(
-#         model_name="BAAI/llm-embedder",
-#         model_kwargs = {"device": "cpu"},
-#         encode_kwargs={'normalize_embeddings':True}
-#         )
-# vector=FAISS.from_documents(limited_docs,embeddings)
 
 prompt=ChatPromptTemplate.from_template(
     """
@@ -69,27 +58,6 @@ llm=ChatGroq(groq_api_key=groq_api_key,
 model_name="llama3-70b-8192"
 )
 
-
-# document_chain=create_stuff_documents_chain(llm,prompt)
-
-
-# retriever=vector.as_retriever()
-# retrieval_chain=create_retrieval_chain(retriever,document_chain)
-
-# prompt1=input("what type of song would you like to listen")
-# response=retrieval_chain.invoke({'input':prompt1})
-
-# def vector_embedding():
-#     if "vectors" not in st.session_state:
-#         st.session_state.embeddings=HuggingFaceBgeEmbeddings(
-#         model_name="BAAI/llm-embedder",
-#         model_kwargs = {"device": "cpu"},
-#         encode_kwargs={'normalize_embeddings':True}
-#         )   
-#         st.session_state.docs= documents
-#         st.session_state.text_splitter=RecursiveCharacterTextSplitter(chunk_size=100,chunk_overlap=20)
-#         st.session_state.final_documents=st.session_state.text_splitter.split_documents(st.session_state.docs)
-#         st.session_state.vector=FAISS.from_documents(st.session_state.final_documents,st.session_state.embeddings)
 def vector_embedding():
     if "vectors" not in st.session_state:
         st.session_state.embeddings = HuggingFaceBgeEmbeddings(
